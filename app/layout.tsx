@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
 
+import "./globals.css";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+
+import Navbar from "@/components/navbar";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -23,13 +32,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html style={{
+        width: "100vw",
+        height: "100vh",
+        scrollBehavior: "smooth",
+        overflowX: "hidden",
+      }} lang="en">
+        <body
+          style={{ width: "100vw", height: "100vh" }}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-950`}
+        >
+          {/* <Navbar brand="Mony"/> */}
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
